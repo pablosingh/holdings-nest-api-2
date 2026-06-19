@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: holdings-postgres
+    environment:
+      POSTGRES_USER: holdings
+      POSTGRES_PASSWORD: holdings_pass
+      POSTGRES_DB: holdings_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/src/db/seed.sql:/docker-entrypoint-initdb.d/seed.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U holdings -d holdings_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: holdings-backend
+    environment:
+      PORT: 3001
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: holdings
+      DB_PASSWORD: holdings_pass
+      DB_NAME: holdings_db
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: holdings-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
