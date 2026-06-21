@@ -2,11 +2,9 @@ import type { Holding } from '../../types';
 
 interface Props {
   holdings: Holding[];
-  onEdit: (h: Holding) => void;
-  onDelete: (id: number) => void;
 }
 
-export function HoldingList({ holdings, onEdit, onDelete }: Props) {
+export function HoldingList({ holdings }: Props) {
   if (!holdings.length) {
     return <p className="py-8 text-center text-gray-500">No hay holdings.</p>;
   }
@@ -22,7 +20,6 @@ export function HoldingList({ holdings, onEdit, onDelete }: Props) {
             <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">Precio Inicial</th>
             <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">Total Inicial</th>
             <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Usuario</th>
-            <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">Acciones</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white">
@@ -34,10 +31,6 @@ export function HoldingList({ holdings, onEdit, onDelete }: Props) {
               <td className="whitespace-nowrap px-4 py-3 text-right text-sm text-gray-600">${parseFloat(h.initial_price).toLocaleString()}</td>
               <td className="whitespace-nowrap px-4 py-3 text-right text-sm text-gray-600">${parseFloat(h.initial_total).toLocaleString()}</td>
               <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-600">{h.user_name ?? h.user_id}</td>
-              <td className="whitespace-nowrap px-4 py-3 text-right text-sm">
-                <button onClick={() => onEdit(h)} className="mr-2 rounded bg-indigo-100 px-3 py-1 text-indigo-700 hover:bg-indigo-200">Editar</button>
-                <button onClick={() => onDelete(h.id)} className="rounded bg-red-100 px-3 py-1 text-red-700 hover:bg-red-200">Eliminar</button>
-              </td>
             </tr>
           ))}
         </tbody>

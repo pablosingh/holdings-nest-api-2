@@ -1,4 +1,10 @@
 import { createApi } from './client';
-import type { User, CreateUserDto, UpdateUserDto } from '../types';
+import type { User, CreateUserDto } from '../types';
 
-export const usersApi = createApi<User, CreateUserDto, UpdateUserDto>('users');
+const full = createApi<User, CreateUserDto, any>('users');
+
+export const usersApi = {
+  getAll: full.getAll,
+  getById: full.getById,
+  create: full.create,
+};

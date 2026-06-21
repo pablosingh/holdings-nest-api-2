@@ -83,8 +83,7 @@ export interface CreateOperationDto {
   buy: boolean;
   exchange?: string;
   comment?: string;
-  cripto_id: number;
-  holding_id?: number;
+  user_id: number;
 }
 
 export interface UpdateOperationDto {
@@ -95,6 +94,5 @@ export interface UpdateOperationDto {
   buy?: boolean;
   exchange?: string;
   comment?: string;
-  cripto_id?: number;
-  holding_id?: number;
+  user_id?: number;
 }

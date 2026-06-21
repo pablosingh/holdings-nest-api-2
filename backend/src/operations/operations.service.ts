@@ -109,9 +109,10 @@ export class OperationsService {
 
   async update(id: number, dto: UpdateOperationDto) {
     await this.findOne(id);
+    const { user_id, ...fields } = dto;
     const q = buildUpdate('operation', id, {
-      ...dto,
-      ticker: dto.ticker?.toUpperCase(),
+      ...fields,
+      ticker: fields.ticker?.toUpperCase(),
     }, { number: '"number"' });
     if (!q) return this.findOne(id);
     const { rows } = await this.db.query(q.text, q.values);
