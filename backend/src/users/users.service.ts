@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DbService } from '../db/db.service';
+import { buildUpdate } from '../db/build-update';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -28,20 +29,11 @@ export class UsersService {
 
   async update(id: number, dto: UpdateUserDto) {
     await this.findOne(id);
-    const fields: string[] = [];
-    const values: any[] = [];
-    let idx = 1;
-
-    if (dto.name !== undefined) { fields.push(`name = $${idx++}`); values.push(dto.name); }
-    if (dto.email !== undefined) { fields.push(`email = $${idx++}`); values.push(dto.email); }
-    if (dto.password !== undefined) { fields.push(`password = $${idx++}`); values.push(dto.password); }
-
-    if (!fields.length) return this.findOne(id);
-
-    values.push(id);
+    const q = buildUpdate('"user"', id, dto);
+    if (!q) return this.findOne(id);
     const { rows } = await this.db.query(
-      `UPDATE "user" SET ${fields.join(', ')} WHERE id = $${idx} RETURNING id, name, email`,
-      values,
+      q.text.replace('RETURNING *', 'RETURNING id, name, email'),
+      q.values,
     );
     return rows[0];
   }

@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DbService } from '../db/db.service';
+import { buildUpdate } from '../db/build-update';
 import { CreateHoldingDto } from './dto/create-holding.dto';
 import { UpdateHoldingDto } from './dto/update-holding.dto';
 
@@ -41,23 +42,12 @@ export class HoldingsService {
 
   async update(id: number, dto: UpdateHoldingDto) {
     await this.findOne(id);
-    const fields: string[] = [];
-    const values: any[] = [];
-    let idx = 1;
-
-    if (dto.ticker !== undefined) { fields.push(`ticker = $${idx++}`); values.push(dto.ticker.toUpperCase()); }
-    if (dto.amount !== undefined) { fields.push(`amount = $${idx++}`); values.push(dto.amount); }
-    if (dto.initial_price !== undefined) { fields.push(`initial_price = $${idx++}`); values.push(dto.initial_price); }
-    if (dto.initial_total !== undefined) { fields.push(`initial_total = $${idx++}`); values.push(dto.initial_total); }
-    if (dto.user_id !== undefined) { fields.push(`user_id = $${idx++}`); values.push(dto.user_id); }
-
-    if (!fields.length) return this.findOne(id);
-
-    values.push(id);
-    const { rows } = await this.db.query(
-      `UPDATE holding SET ${fields.join(', ')} WHERE id = $${idx} RETURNING *`,
-      values,
-    );
+    const q = buildUpdate('holding', id, {
+      ...dto,
+      ticker: dto.ticker?.toUpperCase(),
+    });
+    if (!q) return this.findOne(id);
+    const { rows } = await this.db.query(q.text, q.values);
     return rows[0];
   }
 

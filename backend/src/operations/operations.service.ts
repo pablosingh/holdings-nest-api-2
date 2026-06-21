@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DbService } from '../db/db.service';
+import { buildUpdate } from '../db/build-update';
 import { CreateOperationDto } from './dto/create-operation.dto';
 import { UpdateOperationDto } from './dto/update-operation.dto';
 
@@ -43,27 +44,12 @@ export class OperationsService {
 
   async update(id: number, dto: UpdateOperationDto) {
     await this.findOne(id);
-    const fields: string[] = [];
-    const values: any[] = [];
-    let idx = 1;
-
-    if (dto.ticker !== undefined) { fields.push(`ticker = $${idx++}`); values.push(dto.ticker.toUpperCase()); }
-    if (dto.number !== undefined) { fields.push(`"number" = $${idx++}`); values.push(dto.number); }
-    if (dto.price !== undefined) { fields.push(`price = $${idx++}`); values.push(dto.price); }
-    if (dto.total !== undefined) { fields.push(`total = $${idx++}`); values.push(dto.total); }
-    if (dto.buy !== undefined) { fields.push(`buy = $${idx++}`); values.push(dto.buy); }
-    if (dto.exchange !== undefined) { fields.push(`exchange = $${idx++}`); values.push(dto.exchange); }
-    if (dto.comment !== undefined) { fields.push(`comment = $${idx++}`); values.push(dto.comment); }
-    if (dto.cripto_id !== undefined) { fields.push(`cripto_id = $${idx++}`); values.push(dto.cripto_id); }
-    if (dto.holding_id !== undefined) { fields.push(`holding_id = $${idx++}`); values.push(dto.holding_id); }
-
-    if (!fields.length) return this.findOne(id);
-
-    values.push(id);
-    const { rows } = await this.db.query(
-      `UPDATE operation SET ${fields.join(', ')} WHERE id = $${idx} RETURNING *`,
-      values,
-    );
+    const q = buildUpdate('operation', id, {
+      ...dto,
+      ticker: dto.ticker?.toUpperCase(),
+    }, { number: '"number"' });
+    if (!q) return this.findOne(id);
+    const { rows } = await this.db.query(q.text, q.values);
     return rows[0];
   }
 
