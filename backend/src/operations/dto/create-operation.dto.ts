@@ -26,9 +26,5 @@ export class CreateOperationDto {
   comment?: string;
 
   @IsNumber()
-  cripto_id: number;
-
-  @IsOptional()
-  @IsNumber()
-  holding_id?: number;
+  user_id: number;
 }

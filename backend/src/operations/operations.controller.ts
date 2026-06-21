@@ -16,10 +16,12 @@ export class OperationsController {
   findAll(
     @Query('cripto_id') cripto_id?: string,
     @Query('holding_id') holding_id?: string,
+    @Query('ticker') ticker?: string,
   ) {
     return this.operationsService.findAll(
       cripto_id ? +cripto_id : undefined,
       holding_id ? +holding_id : undefined,
+      ticker,
     );
   }
 
