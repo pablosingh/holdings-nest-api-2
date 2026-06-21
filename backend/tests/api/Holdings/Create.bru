@@ -1,0 +1,26 @@
+meta {
+  name: Create Holding
+  method: POST
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/holdings
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body {
+  {
+    "ticker": "BTC",
+    "amount": 0.5,
+    "initial_price": 67500,
+    "initial_total": 33750,
+    "user_id": {{user_admin}}
+  }
+}

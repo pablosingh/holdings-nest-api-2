@@ -1,0 +1,12 @@
+meta {
+  name: List Holdings by User
+  method: GET
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/holdings?user_id={{user_admin}}
+  body: none
+  auth: none
+}

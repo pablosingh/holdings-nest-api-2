@@ -1,0 +1,22 @@
+meta {
+  name: Update Cripto
+  method: PATCH
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base_url}}/criptos/{{cripto_btc}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body {
+  {
+    "price": 68000.00
+  }
+}

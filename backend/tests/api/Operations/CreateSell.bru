@@ -1,0 +1,30 @@
+meta {
+  name: Create Sell Operation
+  method: POST
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/operations
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body {
+  {
+    "ticker": "BTC",
+    "number": 0.05,
+    "price": 68000,
+    "total": 3400,
+    "buy": false,
+    "exchange": "Binance",
+    "comment": "Venta de prueba",
+    "cripto_id": {{cripto_btc}},
+    "holding_id": 1
+  }
+}

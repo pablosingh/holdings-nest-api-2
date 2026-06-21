@@ -1,0 +1,22 @@
+meta {
+  name: Update Operation
+  method: PATCH
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{base_url}}/operations/1
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body {
+  {
+    "comment": "Comentario actualizado"
+  }
+}

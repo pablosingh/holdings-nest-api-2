@@ -1,0 +1,11 @@
+{
+  "env-vars": [
+    { "name": "base_url", "value": "http://localhost:3001", "enabled": true },
+    { "name": "user_admin", "value": "1", "enabled": true },
+    { "name": "user_pablo", "value": "2", "enabled": true },
+    { "name": "cripto_btc", "value": "1", "enabled": true },
+    { "name": "cripto_eth", "value": "2", "enabled": true },
+    { "name": "cripto_sol", "value": "3", "enabled": true },
+    { "name": "cripto_ada", "value": "4", "enabled": true }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Holdings API",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

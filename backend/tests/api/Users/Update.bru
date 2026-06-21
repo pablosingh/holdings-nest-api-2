@@ -1,0 +1,22 @@
+meta {
+  name: Update User
+  method: PATCH
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base_url}}/users/{{user_admin}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body {
+  {
+    "name": "Admin Updated"
+  }
+}

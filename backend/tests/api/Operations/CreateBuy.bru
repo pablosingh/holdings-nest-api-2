@@ -1,0 +1,30 @@
+meta {
+  name: Create Buy Operation
+  method: POST
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/operations
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body {
+  {
+    "ticker": "BTC",
+    "number": 0.1,
+    "price": 67500,
+    "total": 6750,
+    "buy": true,
+    "exchange": "Binance",
+    "comment": "Compra de prueba",
+    "cripto_id": {{cripto_btc}},
+    "holding_id": 1
+  }
+}
