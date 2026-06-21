@@ -1,16 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { HoldingsService } from './holdings.service';
-import { CreateHoldingDto } from './dto/create-holding.dto';
-import { UpdateHoldingDto } from './dto/update-holding.dto';
 
 @Controller('holdings')
 export class HoldingsController {
   constructor(private readonly holdingsService: HoldingsService) {}
 
-  @Post()
-  create(@Body() dto: CreateHoldingDto) {
-    return this.holdingsService.create(dto);
-  }
+  // @Post()
+  // create(@Body() dto: CreateHoldingDto) {
+  //   return this.holdingsService.create(dto);
+  // }
 
   @Get()
   findAll(@Query('user_id') user_id?: string) {
@@ -22,13 +20,13 @@ export class HoldingsController {
     return this.holdingsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: UpdateHoldingDto) {
-    return this.holdingsService.update(+id, dto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() dto: UpdateHoldingDto) {
+  //   return this.holdingsService.update(+id, dto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.holdingsService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.holdingsService.remove(+id);
+  // }
 }
