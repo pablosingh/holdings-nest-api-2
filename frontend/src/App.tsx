@@ -4,8 +4,9 @@ import { UsersPage } from './components/users/UsersPage';
 import { CriptosPage } from './components/criptos/CriptosPage';
 import { HoldingsPage } from './components/holdings/HoldingsPage';
 import { OperationsPage } from './components/operations/OperationsPage';
+import { RegisterPage } from './components/register/RegisterPage';
 
-type View = 'users' | 'criptos' | 'holdings' | 'operations';
+type View = 'users' | 'criptos' | 'holdings' | 'operations' | 'register';
 
 export default function App() {
   const [activeView, setActiveView] = useState<View>('users');
@@ -16,6 +17,7 @@ export default function App() {
       case 'criptos': return <CriptosPage />;
       case 'holdings': return <HoldingsPage />;
       case 'operations': return <OperationsPage />;
+      case 'register': return <RegisterPage />;
     }
   };
 

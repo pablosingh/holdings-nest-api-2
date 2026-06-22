@@ -3,6 +3,7 @@ const navItems = [
   { label: 'Criptos', path: 'criptos' },
   { label: 'Holdings', path: 'holdings' },
   { label: 'Operaciones', path: 'operations' },
+  { label: 'Registrarse', path: 'register' },
 ] as const;
 
 interface SidebarProps {
