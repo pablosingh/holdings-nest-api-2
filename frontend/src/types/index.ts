@@ -96,3 +96,14 @@ export interface UpdateOperationDto {
   comment?: string;
   user_id?: number;
 }
+
+export interface LoginDto {
+  email: string;
+  password: string;
+}
+
+export interface AuthUser {
+  id: number;
+  name: string;
+  email: string;
+}

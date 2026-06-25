@@ -9,9 +9,10 @@ const navItems = [
 interface SidebarProps {
   active: string;
   onNavigate: (path: string) => void;
+  onLogout: () => void;
 }
 
-export function Sidebar({ active, onNavigate }: SidebarProps) {
+export function Sidebar({ active, onNavigate, onLogout }: SidebarProps) {
   return (
     <aside className="flex min-h-screen w-64 flex-col bg-gray-900 text-white">
       <div className="px-6 py-6">
@@ -32,6 +33,14 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
           </button>
         ))}
       </nav>
+      <div className="border-t border-gray-700 px-3 py-3">
+        <button
+          onClick={onLogout}
+          className="w-full rounded-lg px-4 py-2.5 text-left text-sm font-medium text-gray-300 transition-colors hover:bg-gray-800 hover:text-white"
+        >
+          Salir
+        </button>
+      </div>
     </aside>
   );
 }
