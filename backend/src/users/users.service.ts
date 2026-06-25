@@ -1,17 +1,25 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { DbService } from '../db/db.service';
 import { buildUpdate } from '../db/build-update';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
+const SALT_ROUNDS = 11;
+
 @Injectable()
 export class UsersService {
   constructor(private readonly db: DbService) {}
 
+  private async hashPassword(password: string): Promise<string> {
+    return bcrypt.hash(password, SALT_ROUNDS);
+  }
+
   async create(dto: CreateUserDto) {
+    const hashedPassword = await this.hashPassword(dto.password);
     const { rows } = await this.db.query(
       'INSERT INTO "user" (name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email',
-      [dto.name, dto.email, dto.password],
+      [dto.name, dto.email, hashedPassword],
     );
     return rows[0];
   }
@@ -29,6 +37,9 @@ export class UsersService {
 
   async update(id: number, dto: UpdateUserDto) {
     await this.findOne(id);
+    if (dto.password) {
+      dto.password = await this.hashPassword(dto.password);
+    }
     const q = buildUpdate('"user"', id, dto);
     if (!q) return this.findOne(id);
     const { rows } = await this.db.query(

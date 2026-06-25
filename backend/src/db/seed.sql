@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS operation (
 );
 
 INSERT INTO "user" (name, email, password) VALUES
-  ('Admin', 'admin@holdings.com', 'admin123'),
-  ('Pablo', 'pablo@holdings.com', 'pablo123')
+  ('Admin', 'admin@holdings.com', '$2b$11$588N5afEh/dC9rcGOdDNeOwkjcArTWZZOrCSxNlgN8lkcS3FV2QQu'),
+  ('Pablo', 'pablo@holdings.com', '$2b$11$tkncmR.fOBzO/oaSRZA9A.Gxuy7ugn3qUwn04OKSHtmiyWJfgo9fy')
 ON CONFLICT (email) DO NOTHING;
 
 INSERT INTO cripto (ticker, price) VALUES
