@@ -6,16 +6,16 @@ import { HoldingsPage } from './components/holdings/HoldingsPage';
 import { OperationsPage } from './components/operations/OperationsPage';
 import { RegisterPage } from './components/register/RegisterPage';
 import { LoginPage } from './components/login/LoginPage';
-import type { AuthUser } from './types';
+import { useAuth } from './auth/AuthContext';
 
 type View = 'users' | 'criptos' | 'holdings' | 'operations' | 'register';
 
 export default function App() {
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const { user, logout } = useAuth();
   const [activeView, setActiveView] = useState<View>('users');
 
   if (!user) {
-    return <LoginPage onLogin={(u) => setUser(u)} />;
+    return <LoginPage />;
   }
 
   const renderPage = () => {
@@ -30,7 +30,7 @@ export default function App() {
 
   return (
     <div className="flex">
-      <Sidebar active={activeView} onNavigate={(p) => setActiveView(p as View)} onLogout={() => setUser(null)} />
+      <Sidebar active={activeView} onNavigate={(p) => setActiveView(p as View)} onLogout={logout} />
       <main className="flex-1 bg-gray-100 p-8">
         {renderPage()}
       </main>

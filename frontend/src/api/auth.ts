@@ -1,6 +1,6 @@
-import type { LoginDto, AuthUser } from '../types';
+import type { LoginDto, AuthResponse } from '../types';
 
-export async function login(dto: LoginDto): Promise<AuthUser> {
+export async function login(dto: LoginDto): Promise<AuthResponse> {
   const res = await fetch('/api/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

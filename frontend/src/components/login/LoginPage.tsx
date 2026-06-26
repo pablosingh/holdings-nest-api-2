@@ -1,12 +1,8 @@
 import { useState } from 'react';
-import { login } from '../../api/auth';
-import type { AuthUser, LoginDto } from '../../types';
+import { useAuth } from '../../auth/AuthContext';
 
-interface LoginPageProps {
-  onLogin: (user: AuthUser) => void;
-}
-
-export function LoginPage({ onLogin }: LoginPageProps) {
+export function LoginPage() {
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -18,9 +14,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
     setError(null);
 
     try {
-      const dto: LoginDto = { email, password };
-      const user = await login(dto);
-      onLogin(user);
+      await login(email, password);
     } catch {
       setError('Email o contraseña incorrectos');
     } finally {
