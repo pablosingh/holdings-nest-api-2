@@ -2,3 +2,5 @@ node_modules/
 dist/
 .env
 *.log
+pgdata/
+backup_db/

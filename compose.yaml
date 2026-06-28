@@ -9,8 +9,9 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql/data
       - ./backend/src/db/seed.sql:/docker-entrypoint-initdb.d/seed.sql
+      - ./backup_db/backup_copia.sql:/docker-entrypoint-initdb.d/backup_copia.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U holdings -d holdings_db"]
       interval: 5s
@@ -45,5 +46,3 @@ services:
     depends_on:
       - backend
 
-volumes:
-  pgdata:
